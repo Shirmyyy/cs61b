@@ -84,7 +84,7 @@ public class LinkedListDeque<LochNess> {
 	}
 	
 	public LochNess getRecursive(int index) {
-		return sentinel.getRecursive(index);
+		return sentinel.next.getRecursive(index);
 	}
 	
 	public int size() {
