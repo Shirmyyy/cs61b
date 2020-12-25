@@ -57,7 +57,9 @@ public class LinkedListDeque<LochNess> {
 		LochNess s = sentinel.next.item;
 		sentinel.next.next.previous=sentinel;
 		sentinel.next=sentinel.next.next;
-		size -= 1;
+		if (size!=0) {
+			size -= 1;
+		}
 		return s;
 	}
 	
@@ -65,7 +67,9 @@ public class LinkedListDeque<LochNess> {
 		LochNess s = sentinel.previous.item;
 		sentinel.previous.previous.next=sentinel;
 		sentinel.previous=sentinel.previous.previous;
-		size -= 1;
+		if (size!=0) {
+			size -= 1;
+		}
 		return s;
 	}
 	
