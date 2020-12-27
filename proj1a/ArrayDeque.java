@@ -35,7 +35,6 @@ public class ArrayDeque<Item> {
         System.out.println("-----------------------------");*/
         front=a.length-(size-front);
         items = a;
-        
     }
     
     public void addFirst(Item x) {
@@ -81,6 +80,9 @@ public class ArrayDeque<Item> {
     	Item x = getFirst();
         items[front] = null;
         front+=1;
+        if (size<=items.length*0.25) {
+        	resize((int) (items.length*0.25+1));
+        }
         if (front==items.length) {
         	front=0;
         }
@@ -114,6 +116,9 @@ public class ArrayDeque<Item> {
         Item x = getLast();
         items[end] = null;
         end-=1;
+        if (size<=items.length*0.25) {
+        	resize((int) (items.length*0.25+1));
+        }
         if (end<0) {
         	end=items.length-1;
         }
