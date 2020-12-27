@@ -80,16 +80,21 @@ public class ArrayDeque<Item> {
     public Item removeFirst() {
     	Item x = getFirst();
         items[front] = null;
-        size = size - 1;
         front+=1;
         if (front==items.length) {
         	front=0;
         }
+        if (size!=0) {
+			size -= 1;
+		}
         return x;
     }
     
     /** Gets the ith item in the list (0 is the front). */
     public Item get(int i) {
+    	if (front+i>items.length) {
+    		return items[front+i-items.length];
+    	}
         return items[front+i];
     }
 
@@ -112,7 +117,9 @@ public class ArrayDeque<Item> {
         if (end<0) {
         	end=items.length-1;
         }
-        size = size - 1;
+        if (size!=0) {
+			size -= 1;
+		}
         return x;
     }
     
