@@ -13,34 +13,23 @@ public class ArrayDeque<Item> {
     /** Resizes the underlying array to the target capacity. */
     private void resize(int capacity) {
         Item[] a = (Item[]) new Object[capacity];
-        /*
-        System.out.println("size"+size);
-        System.out.println("front"+front);
-        System.out.println("end"+end);
         
-        for (Item i : items) {
-    		System.out.println(i);
-    	}*/
-        System.arraycopy(items, front, a, a.length-(size-front), size-front);
-        /*System.out.println("-----------------------------");
-        for (Item i : a) {
-    		System.out.println(i);
-    	}*/
-        System.arraycopy(items, 0, a, 0, end+1);
-        /*
-        System.out.println("-----------------------------");
-        for (Item i : a) {
-    		System.out.println(i);
-    	}
-        System.out.println("-----------------------------");*/
-        front=a.length-(size-front);
+        if (front>end) {
+        	System.arraycopy(items, front, a, a.length-(size-front), size-front);
+            System.arraycopy(items, 0, a, 0, end+1);
+            front=a.length-(size-front);
+        }else {
+        	System.arraycopy(items, front, a, 0, size);
+        	front=0;
+        	end=size-1;
+        }
+        
         items = a;
     }
     
     public void addFirst(Item x) {
     	if (size == items.length) {
             resize(size*2);
-            
         }
     	front-=1;
     	if (front<0) {
@@ -80,17 +69,40 @@ public class ArrayDeque<Item> {
     	Item x = getFirst();
         items[front] = null;
         front+=1;
-        if (size<=items.length*0.25) {
-        	resize((int) (items.length*0.25+1));
-        }
+        
         if (front==items.length) {
         	front=0;
         }
         if (size!=0) {
 			size -= 1;
 		}
+        if (items.length>8 & size<=items.length*0.2) {
+        	resize((int) (items.length*0.2+1));
+        }
         return x;
     }
+    
+    /** Deletes item from back of the list and
+     * returns deleted item. */
+   public Item removeLast() {
+       Item x = getLast();
+       items[end] = null;
+       end-=1;
+      
+       if (end<0) {
+       	end=items.length-1;
+       }
+       if (size!=0) {
+			size -= 1;
+		}
+       
+       if (items.length>8 & size<=items.length*0.2) {
+          	resize((int) (items.length*0.2+1));
+          }
+       
+       return x;
+   }
+   
     
     /** Gets the ith item in the list (0 is the front). */
     public Item get(int i) {
@@ -109,23 +121,6 @@ public class ArrayDeque<Item> {
     	for (Item i : items) {
     		System.out.println(i);
     	}
-    }
-    /** Deletes item from back of the list and
-      * returns deleted item. */
-    public Item removeLast() {
-        Item x = getLast();
-        items[end] = null;
-        end-=1;
-        if (size<=items.length*0.25) {
-        	resize((int) (items.length*0.25+1));
-        }
-        if (end<0) {
-        	end=items.length-1;
-        }
-        if (size!=0) {
-			size -= 1;
-		}
-        return x;
     }
     
     /*public static void main(String[] args) {
