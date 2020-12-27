@@ -17,7 +17,7 @@ public class ArrayDeque<Item> {
         if (front>end) {
         	System.arraycopy(items, front, a, a.length-(items.length-front), items.length-front);
             System.arraycopy(items, 0, a, 0, end+1);
-            front=a.length-(size-front);
+            front=a.length-(items.length-front);
         }else {
         	System.arraycopy(items, front, a, 0, size);
         	front=0;
@@ -28,25 +28,24 @@ public class ArrayDeque<Item> {
     }
     
     public void addFirst(Item x) {
-    	size++;
     	if (size == items.length) {
             resize(size*2);
         }
+    	size++;
     	front-=1;
     	if (front<0) {
         	front=items.length-1;
         }
     	items[front] = x;
- 
-
     }
 
     /** Inserts X into the back of the list. */
     public void addLast(Item x) {
-    	size++;
+    	
         if (size == items.length) {
             resize(size*2);
         }
+        size++;
         end+=1;
         if (end==items.length) {
         	end=0;
@@ -69,6 +68,10 @@ public class ArrayDeque<Item> {
     }
     
     public Item removeFirst() {
+    	if (size==0) {
+    		return null;
+    	}
+    	
     	Item x = getFirst();
         items[front] = null;
         front+=1;
@@ -76,9 +79,7 @@ public class ArrayDeque<Item> {
         if (front==items.length) {
         	front=0;
         }
-        if (size!=0) {
-			size -= 1;
-		}
+		size -= 1;
         if (items.length>8 & size<=items.length*0.2) {
         	resize((int) (items.length*0.2+1));
         }
@@ -88,6 +89,9 @@ public class ArrayDeque<Item> {
     /** Deletes item from back of the list and
      * returns deleted item. */
    public Item removeLast() {
+	   if (size==0) {
+	   		return null;
+	   	}
        Item x = getLast();
        items[end] = null;
        end-=1;
@@ -95,10 +99,7 @@ public class ArrayDeque<Item> {
        if (end<0) {
        	end=items.length-1;
        }
-       if (size!=0) {
-			size -= 1;
-		}
-       
+       size -= 1;       
        if (items.length>8 & size<=items.length*0.2) {
           	resize((int) (items.length*0.2+1));
           }
