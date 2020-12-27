@@ -92,7 +92,7 @@ public class ArrayDeque<Item> {
     
     /** Gets the ith item in the list (0 is the front). */
     public Item get(int i) {
-    	if (front+i>items.length) {
+    	if (front+i>=items.length) {
     		return items[front+i-items.length];
     	}
         return items[front+i];
