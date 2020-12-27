@@ -15,7 +15,7 @@ public class ArrayDeque<Item> {
         Item[] a = (Item[]) new Object[capacity];
         
         if (front>end) {
-        	System.arraycopy(items, front, a, a.length-(size-front), size-front);
+        	System.arraycopy(items, front, a, a.length-(items.length-front), items.length-front);
             System.arraycopy(items, 0, a, 0, end+1);
             front=a.length-(size-front);
         }else {
@@ -28,6 +28,7 @@ public class ArrayDeque<Item> {
     }
     
     public void addFirst(Item x) {
+    	size++;
     	if (size == items.length) {
             resize(size*2);
         }
@@ -36,12 +37,13 @@ public class ArrayDeque<Item> {
         	front=items.length-1;
         }
     	items[front] = x;
-    	size++;
+ 
 
     }
 
     /** Inserts X into the back of the list. */
     public void addLast(Item x) {
+    	size++;
         if (size == items.length) {
             resize(size*2);
         }
@@ -50,12 +52,13 @@ public class ArrayDeque<Item> {
         	end=0;
         }
     	items[end] = x;
-    	size++;
+    	
     }
 
     public boolean isEmpty() {
     	return size==0;
     }
+    
     /** Returns the item from the back of the list. */
     private Item getLast() {
         return items[end];
